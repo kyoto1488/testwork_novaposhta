@@ -22,7 +22,13 @@
                     <div class="left-side">
                     </div>
                     <div class="right-side">
-                        <button type="button" data-price="{{ $good['price'] }}" data-toggle="toggle-basket-item" data-id="{{ $good['id'] }}" class="btn-add-to-basket">
+                        <button
+                                type="button"
+                                data-action="toggle-text-button-basket-item"
+                                data-price="{{ $good['price'] }}"
+                                data-id="{{ $good['id'] }}"
+                                data-quantity="1"
+                                class="btn-add-to-basket">
                             Добавить в корзину
                         </button>
                     </div>

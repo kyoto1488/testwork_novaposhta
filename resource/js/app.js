@@ -1,74 +1,84 @@
 import $ from 'jquery';
-import Basket from './Basket';
-import rerenderButtonFavorite from './rerenderButtonToggleItem';
-import rerenderCountItems from './rerenderCountItems';
+import basket, {GOODS_BASKET_TYPE} from './goodsBasket';
+import basketGoodsItemTemplate from './templates/basket-item';
 import {getFetchByIds, getCity} from './api';
 import {trim, filter, reduce} from 'lodash-es';
 import '../scss/app.scss';
-import templateItem from "./templateItem";
 
-window.$ = window.jQuery = $;
-window.BasketGoods = new Basket(window.localStorage, 'mybasket');
-window.BasketGoodsType = 'GOODS';
-const $buttonsToggleItem = $('[data-toggle="toggle-basket-item"]');
-const $badgeCountItems = $('#count-items');
-if (!window.BasketGoods.hasType(window.BasketGoodsType)) {
-    window.BasketGoods.addType(window.BasketGoodsType);
-}
+const rerenderCountBasketItems = () => {
+    const $badge = $('#count-basket-items');
+    $badge.text(basket.countItems(GOODS_BASKET_TYPE));
+};
+rerenderCountBasketItems();
 
-rerenderButtonFavorite(
-    $buttonsToggleItem,
-    window.BasketGoods,
-    window.BasketGoodsType
-);
-rerenderCountItems(
-    $badgeCountItems,
-    window.BasketGoods,
-    window.BasketGoodsType
-);
-
-$buttonsToggleItem.click(function () {
+$('[data-action="toggle-text-button-basket-item"]').click(function() {
     const $this = $(this);
     const id = parseInt($this.attr('data-id'));
     const price = parseFloat($this.attr('data-price'));
+    const quantity = parseInt($this.attr('data-quantity'));
 
-    if (window.BasketGoods.hasItem(window.BasketGoodsType, 'id', id)) {
-        window.BasketGoods.deleteItem(window.BasketGoodsType, 'id', id);
+    if (basket.hasItem(GOODS_BASKET_TYPE, 'id', id)) {
+        basket.deleteItem(GOODS_BASKET_TYPE, 'id', id);
+        $this.text('Добавить в корзину');
     } else {
-        window.BasketGoods.addItem(window.BasketGoodsType, {
+        basket.addItem(GOODS_BASKET_TYPE, {
             id,
             price,
-            quantity: 1,
-        })
+            quantity
+        });
+        $this.text('Удалить из корзины');
     }
-    rerenderButtonFavorite(
-        $buttonsToggleItem,
-        window.BasketGoods,
-        window.BasketGoodsType
-    );
-    rerenderCountItems(
-        $badgeCountItems,
-        window.BasketGoods,
-        window.BasketGoodsType
+    rerenderCountBasketItems();
+});
+$('[data-action="toggle-text-button-basket-item"]').each(function() {
+    const $this = $(this);
+    const id = parseInt($this.attr('data-id'));
+    $this.text(
+        basket.hasItem(GOODS_BASKET_TYPE, 'id', id) ? 'Удалить из корзины' : 'Добавить в корзину'
     );
 });
 
 if ($('#rootBasketList').get(0)) {
-    const list = window.BasketGoods.getDataFromType(window.BasketGoodsType);
-    let ids = '';
+    const $rootEl = $('#rootBasketList');
+    const list = basket.getDataFromType(GOODS_BASKET_TYPE);
 
-    for (let item of list) {
-        ids += ',' + item.id;
-    }
+    let ids = reduce(list, (sum, n) => {
+        return sum + ',' + n.id;
+    }, '');
     ids = trim(ids, ',');
+
     getFetchByIds(ids).done(function (json) {
-        const data = JSON.parse(json);
-        $('#rootBasketList').html(
-            templateItem(data)
-        );
+        const data = $.parseJSON(json);
+        let html = '';
+
+        for (let item of data) {
+            const basketItem = basket.getItem(GOODS_BASKET_TYPE, 'id', item.id);
+            item.maxQuantity = item.quantity;
+            item.quantity = basketItem.quantity;
+            item.onChangeQuantity = (elem) => {
+                const $elem = $(elem);
+                basket.updateItem(GOODS_BASKET_TYPE, 'id', item.id, {
+                    quantity: parseInt($elem.val())
+                });
+            };
+            item.onDelete = () => {
+                basket.deleteItem(GOODS_BASKET_TYPE, 'id', item.id);
+                $('#basket-item-' . item.id).remove();
+            };
+            html += basketGoodsItemTemplate(item);
+        }
+        window.onChangeQuantityBasketItem = (id, val) => {
+            basket.updateItem(GOODS_BASKET_TYPE, 'id', id, {
+                quantity: parseInt(val)
+            });
+        };
+        window.onDeleteBasketItem = (id, elem) => {
+            $(elem).remove();
+            basket.deleteItem(GOODS_BASKET_TYPE, 'id', id);
+        };
+        $rootEl.html(html);
     });
 }
-
 
 if ($('#form-create-order').get(0)) {
     const $form = $('#form-create-order');
@@ -81,10 +91,10 @@ if ($('#form-create-order').get(0)) {
 
     const $snapshotBasket = $form.find('input[name="basket_snapshot"]:eq(0)');
     $snapshotBasket.val(
-        JSON.stringify(window.BasketGoods.getDataFromType(window.BasketGoodsType))
+        JSON.stringify(basket.getDataFromType(GOODS_BASKET_TYPE))
     );
 
-    const allItems = window.BasketGoods.getDataFromType(window.BasketGoodsType);
+    const allItems = basket.getDataFromType(GOODS_BASKET_TYPE);
     const totalPrice = reduce(allItems, (sum, n) => {
         return sum + (n.quantity * n.price);
     }, 0);
@@ -127,8 +137,8 @@ if ($('#form-create-order').get(0)) {
                     $selectDepartment.show();
                 }
             })
-    })
+    });
     $form.submit(() => {
-        window.BasketGoods.deleteType(window.BasketGoodsType);
+        basket.clearType(GOODS_BASKET_TYPE);
     });
 }

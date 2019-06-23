@@ -53,6 +53,18 @@ export default class Basket {
 
     /**
      * @param type
+     */
+    clearType(type) {
+        if (!this.hasType(type)) {
+            throw new Error('Type is not exists');
+        }
+        const storageData = this.getStorageData();
+        storageData[type] = [];
+        this.setStorageData(storageData);
+    }
+
+    /**
+     * @param type
      * @param key
      * @param id
      * @param data
@@ -69,7 +81,10 @@ export default class Basket {
 
         for (let i = 0; i < typeArray.length; ++i) {
             if (typeArray[i][key] === id) {
-                typeArray[i] = data;
+                typeArray[i] = {
+                    ...typeArray[i],
+                    ...data
+                };
             }
         }
         storageData[type] = typeArray;

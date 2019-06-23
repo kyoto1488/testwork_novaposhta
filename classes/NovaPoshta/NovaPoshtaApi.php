@@ -25,7 +25,7 @@ class NovaPoshtaApi
         $this->url = $url;
     }
 
-    public function getWarehouses($city)
+    public function getWarehousesByCity($city)
     {
         $data = [
             'apiKey' => $this->apiKey,

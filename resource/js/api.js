@@ -21,7 +21,7 @@ export const getFetchByIds = ids =>
  * @param city
  * @returns {*}
  */
-export const getCity = (find) =>
-    $.get('/api/novaposhta/street', {
-        find
+export const getCity = city =>
+    $.get('/api/novaposhta/city', {
+        city
     });

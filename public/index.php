@@ -16,12 +16,18 @@ $homeRoute = route()->get('/', function () {
         'goods' => GoodsModel::fetchAll()
     ]);
 });
+routes()->add($homeRoute);
+
 $basketRoute = route()->get('/basket', function () {
     render('goods/basket');
 });
+routes()->add($basketRoute);
+
 $getCheckoutRoute = route()->get('/checkout', function () {
     render('goods/checkout');
 });
+routes()->add($getCheckoutRoute);
+
 $postCheckoutRoute = route()->post('/checkout', function () {
     $requestRules = [
         'name' => 'required|string|max:30',
@@ -40,6 +46,8 @@ $postCheckoutRoute = route()->post('/checkout', function () {
     );
     redirect('/');
 });
+routes()->add($postCheckoutRoute);
+
 $apiFetchByIds = route()->get('/api/fetch', function () {
     $requestRules = [
         'ids' => 'required|array:numeric',
@@ -49,28 +57,20 @@ $apiFetchByIds = route()->get('/api/fetch', function () {
     }
     echo json_encode(GoodsModel::fetchAllByIds($_GET['ids']));
 });
-$apiNovaposhtaSearchDepartment = route()->get('/api/novaposhta/street', function () {
+routes()->add($apiFetchByIds);
+
+$apiNovaposhtaSearchDepartment = route()->get('/api/novaposhta/city', function () {
     $requestRules = [
-        'find' => 'required|string'
+        'city' => 'required|string'
     ];
     if (!validator()->passes($_GET, $requestRules)) {
         throw new HttpInvalidParamException('Bad request');
     }
 
-    echo novaposhta_api()->getWarehouses($_GET['find']);
+    echo novaposhta_api()->getWarehousesByCity($_GET['city']);
 });
-
-
-
 routes()->add($apiNovaposhtaSearchDepartment);
-routes()->add($getCheckoutRoute);
-routes()->add($postCheckoutRoute);
-routes()->add($apiFetchByIds);
-routes()->add($homeRoute);
-routes()->add($basketRoute);
+
+
 router()->setRoutes(routes());
 router()->run();
-
-
-
-

@@ -11,7 +11,7 @@
     @yield('content')
     <a href="/basket" class="btn-basket-open">
         <i class="fas fa-shopping-basket"></i>
-        <span id="count-items" class="badge"></span>
+        <span id="count-basket-items" class="badge"></span>
     </a>
 </main>
 <script src="https://kit.fontawesome.com/ce6bcb8e5e.js"></script>

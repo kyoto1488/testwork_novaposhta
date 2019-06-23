@@ -20,8 +20,10 @@ class GoodsModel
 
     public static function fetchAllByIds($ids)
     {
-        $sql = "SELECT * FROM goods WHERE id IN ($ids)";
-        $query = db()->query($sql);
-        return $query->fetchAll();
+        $sql = db()->prepare('SELECT * FROM goods WHERE id IN (:ids)');
+        $sql = $sql->execute([
+            ':ids' => $ids
+        ]);
+        return $sql->fetchAll();
     }
 }

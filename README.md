@@ -1,12 +1,17 @@
+# ENV
+php >= 7.1 \
+server apache
+
 # Install composer for autoload
 composer install && composer dump-autoload -o
 
-# Config files
+# Config
 /config
 
-# WWW dir
+# WWW 
 /public
 
-# Sql dump
+# Sql 
 /dump.sql
+
 
