@@ -1,0 +1,31 @@
+{
+    "name": "oleg/novaposhta",
+    "authors": [
+        {
+            "name": "Олег",
+            "email": "kyoto1488@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "NovaPoshta\\Providers\\": "providers/",
+            "NovaPoshta\\Classes\\": "classes/",
+            "NovaPoshta\\Interfaces\\": "interfaces/",
+            "NovaPoshta\\Models\\": "models/"
+        },
+        "files": [
+            "functions/config.php",
+            "functions/container.php",
+            "functions/router.php",
+            "functions/view.php",
+            "functions/debug.php",
+            "functions/database.php",
+            "functions/validation.php",
+            "functions/api.php"
+        ]
+    },
+    "require": {
+        "duncan3dc/blade": "^4.5",
+        "league/container": "^3.2"
+    }
+}

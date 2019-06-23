@@ -1,0 +1,184 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap&subset=cyrillic);
+/* http://meyerweb.com/eric/tools/css/reset/
+   v4.0 | 20180602
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+main, menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, menu, nav, section {
+  display: block; }
+
+/* HTML5 hidden-attribute fix for newer browsers */
+*[hidden] {
+  display: none; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.items-container {
+  display: flex;
+  width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap; }
+
+.card-item {
+  width: calc(100% / 3 - 2 * (.6rem * 2));
+  margin-left: .6rem;
+  margin-right: .6rem;
+  margin-bottom: 1rem;
+  background: white;
+  border-radius: .4rem;
+  box-shadow: 0 0.2rem 1rem rgba(119, 136, 153, 0.5);
+  align-self: stretch; }
+  @media (max-width: 568px) {
+    .card-item {
+      width: 100%; } }
+  .card-item .header {
+    display: block;
+    width: 100%; }
+    .card-item .header img.pic {
+      width: 100%;
+      height: 12rem;
+      -o-object-fit: cover;
+         object-fit: cover; }
+  .card-item .card-body {
+    padding: 1.5rem 1.3rem; }
+    .card-item .card-body .title {
+      font-weight: bold;
+      font-size: 1.1rem; }
+    .card-item .card-body .description {
+      margin-top: .5rem;
+      font-size: .92rem; }
+    .card-item .card-body .price {
+      margin-top: .8rem;
+      font-size: 2rem;
+      font-weight: normal; }
+  .card-item .footer {
+    font-size: .8rem;
+    color: lightslategray;
+    display: flex;
+    padding: .9rem; }
+    .card-item .footer .left-side,
+    .card-item .footer .right-side {
+      width: 50%; }
+    .card-item .footer .left-side {
+      text-align: left; }
+    .card-item .footer .right-side {
+      text-align: right; }
+      .card-item .footer .right-side .btn-add-to-basket {
+        background: transparent;
+        border: none;
+        padding: 0;
+        color: lightslategray;
+        font-size: .8rem; }
+        .card-item .footer .right-side .btn-add-to-basket:hover {
+          cursor: pointer; }
+
+.item {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  background: white;
+  box-shadow: 0 0.2rem 1rem rgba(119, 136, 153, 0.5);
+  margin-bottom: 1rem; }
+  .item .left-side {
+    width: 30%; }
+    .item .left-side img.pic {
+      width: 100%;
+      -o-object-fit: cover;
+         object-fit: cover; }
+  .item .right-side {
+    width: 70%;
+    padding: 1rem .8rem; }
+    .item .right-side .title {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: .5rem; }
+    .item .right-side .price {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      font-weight: bold; }
+
+.btn-basket-open {
+  position: fixed;
+  width: 3rem;
+  right: 2rem;
+  bottom: 2rem;
+  border-radius: 100%;
+  background: transparent;
+  border: none;
+  color: dodgerblue;
+  font-size: 2.5rem; }
+  .btn-basket-open .container-badge {
+    position: relative; }
+  .btn-basket-open .badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: red;
+    color: white;
+    padding: .3rem;
+    border-radius: 100%;
+    font-size: .8rem;
+    font-weight: bold; }
+
+.btn-create-order {
+  position: fixed;
+  width: 3rem;
+  left: 2rem;
+  bottom: 2rem;
+  border-radius: 100%;
+  background: transparent;
+  border: none;
+  color: dodgerblue;
+  font-size: 2.5rem; }
+
+html, body {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  background: white;
+  color: #3e4853; }
+
+main.content {
+  padding: 2rem 1rem; }
+

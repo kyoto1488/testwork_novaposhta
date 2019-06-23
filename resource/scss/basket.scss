@@ -1,0 +1,39 @@
+.btn-basket-open {
+  position: fixed;
+  width: 3rem;
+  right: 2rem;
+  bottom: 2rem;
+  border-radius: 100%;
+  background: transparent;
+  border: none;
+  color: dodgerblue;
+  font-size: 2.5rem;
+
+  .container-badge {
+    position: relative;
+  }
+
+  .badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: red;
+    color: white;
+    padding: .3rem;
+    border-radius: 100%;
+    font-size: .8rem;
+    font-weight: bold;
+  }
+}
+
+.btn-create-order {
+  position: fixed;
+  width: 3rem;
+  left: 2rem;
+  bottom: 2rem;
+  border-radius: 100%;
+  background: transparent;
+  border: none;
+  color: dodgerblue;
+  font-size: 2.5rem;
+}
