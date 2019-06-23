@@ -1,2 +1,5 @@
-# testwork_novaposhta
-Just test work
+# Fast configuration
+composer install && composer dump-autoload -o
+
+# WWW dir
+public
