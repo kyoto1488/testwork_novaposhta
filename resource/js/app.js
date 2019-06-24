@@ -55,16 +55,6 @@ if ($('#rootBasketList').get(0)) {
             const basketItem = basket.getItem(GOODS_BASKET_TYPE, 'id', item.id);
             item.maxQuantity = item.quantity;
             item.quantity = basketItem.quantity;
-            item.onChangeQuantity = (elem) => {
-                const $elem = $(elem);
-                basket.updateItem(GOODS_BASKET_TYPE, 'id', item.id, {
-                    quantity: parseInt($elem.val())
-                });
-            };
-            item.onDelete = () => {
-                basket.deleteItem(GOODS_BASKET_TYPE, 'id', item.id);
-                $('#basket-item-' . item.id).remove();
-            };
             html += basketGoodsItemTemplate(item);
         }
         window.onChangeQuantityBasketItem = (id, val) => {
@@ -122,21 +112,30 @@ if ($('#form-create-order').get(0)) {
                 );
                 $selectDepartment.show();
             }
+        } else {
+            $selectDepartment.html(
+                getOptionsForDepartmentsSelect(departments)
+            );
+            $selectDepartment.show();
         }
     });
     $cityInput.keyup(function() {
         const $this = $(this);
-        getCity($this.val())
-            .done(json => {
-                const {success, data} = JSON.parse(json);
-                departments = data;
-                if (departments.length > 0) {
-                    $selectDepartment.html(
-                        getOptionsForDepartmentsSelect(departments)
-                    );
-                    $selectDepartment.show();
-                }
-            })
+        if ($this.val().trim().length > 0) {
+            getCity($this.val())
+                .done(json => {
+                    const {success, data} = JSON.parse(json);
+                    departments = data;
+                    if (departments.length > 0) {
+                        $selectDepartment.html(
+                            getOptionsForDepartmentsSelect(departments)
+                        );
+                        $selectDepartment.show();
+                    }
+                })
+        } else {
+            $selectDepartment.hide();
+        }
     });
     $form.submit(() => {
         basket.clearType(GOODS_BASKET_TYPE);
