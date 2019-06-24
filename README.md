@@ -2,7 +2,7 @@
 php >= 7.1 \
 apache \
 mysql \
-PDO \
+PDO 
 
 # Install composer for autoload
 composer install && composer dump-autoload -o
