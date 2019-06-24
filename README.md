@@ -1,7 +1,8 @@
 # ENV
 php >= 7.1 \
 apache \
-mysql 
+mysql \
+PDO 
 
 # Install composer for autoload
 composer install && composer dump-autoload -o
